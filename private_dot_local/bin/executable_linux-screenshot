@@ -1,0 +1,62 @@
+#!/bin/sh
+set -eu
+
+mode=${1:-region}
+directory=${XDG_PICTURES_DIR:-"$HOME/Pictures"}/Screenshots
+timestamp=$(date +%Y-%m-%d_%H-%M-%S)
+output="$directory/screenshot_$timestamp.png"
+lock_directory=${XDG_RUNTIME_DIR:-/tmp}/linux-screenshot.lock
+raw=
+
+mkdir -p "$directory"
+
+if ! mkdir "$lock_directory" 2>/dev/null; then
+    exit 0
+fi
+
+cleanup() {
+    [ -z "$raw" ] || rm -f "$raw"
+    rmdir "$lock_directory" 2>/dev/null || true
+}
+trap cleanup EXIT HUP INT TERM
+
+select_geometry() {
+    if [ -n "${SCREEN_CAPTURE_GEOMETRY:-}" ]; then
+        printf '%s\n' "$SCREEN_CAPTURE_GEOMETRY"
+        return
+    fi
+
+    case $mode in
+        region|annotate)
+            slurp
+            ;;
+        monitor)
+            slurp -o
+            ;;
+        full)
+            printf '%s\n' ""
+            ;;
+        *)
+            printf 'Usage: %s {region|monitor|full|annotate}\n' "$0" >&2
+            exit 2
+            ;;
+    esac
+}
+
+geometry=$(select_geometry) || exit 0
+
+if [ "$mode" = annotate ]; then
+    raw=$(mktemp --suffix=.png)
+    grim -g "$geometry" "$raw"
+    swappy -f "$raw" -o "$output"
+    [ -s "$output" ] || exit 0
+else
+    if [ -n "$geometry" ]; then
+        grim -g "$geometry" "$output"
+    else
+        grim "$output"
+    fi
+fi
+
+wl-copy --type image/png < "$output"
+notify-send "Screenshot saved" "$output"

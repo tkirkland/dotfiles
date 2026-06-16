@@ -1,0 +1,5 @@
+# Managed by hypr-deb (issue #4): NVIDIA environment for the Hyprland
+# session. Sourced by uwsm into the systemd user environment.
+export LIBVA_DRIVER_NAME=nvidia
+export __GLX_VENDOR_LIBRARY_NAME=nvidia
+export GBM_BACKEND=nvidia-drm
