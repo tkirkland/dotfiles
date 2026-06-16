@@ -1,0 +1,33 @@
+{
+  "enabledPlugins": {
+    "superpowers@superpowers-marketplace": true,
+    "mempalace@mempalace": true
+  },
+  "extraKnownMarketplaces": {
+    "superpowers-marketplace": {
+      "source": {
+        "source": "github",
+        "repo": "obra/superpowers-marketplace"
+      }
+    },
+    "superclaude": {
+      "source": {
+        "source": "github",
+        "repo": "SuperClaude-Org/SuperClaude_Plugin"
+      }
+    },
+    "mempalace": {
+      "source": {
+        "source": "github",
+        "repo": "mempalace/mempalace"
+      }
+    }
+  },
+  "voice": {
+    "enabled": true,
+    "mode": "hold"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "theme": "dark",
+  "voiceEnabled": true
+}
