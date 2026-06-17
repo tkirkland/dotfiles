@@ -1,0 +1,8 @@
+#!/bin/sh
+# Enable the chezmoi autosync timer after `chezmoi apply` (e.g. on a fresh
+# install). Re-runs whenever the units change, via the hashes below.
+# timer:   {{ include "dot_config/systemd/user/chezmoi-autosync.timer" | sha256sum }}
+# service: {{ include "dot_config/systemd/user/chezmoi-autosync.service" | sha256sum }}
+set -eu
+systemctl --user daemon-reload
+systemctl --user enable --now chezmoi-autosync.timer

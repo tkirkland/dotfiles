@@ -1,0 +1,10 @@
+[Unit]
+Description=Hourly chezmoi autosync (capture live config + push)
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+RandomizedDelaySec=120
+
+[Install]
+WantedBy=timers.target

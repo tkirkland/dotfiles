@@ -1,0 +1,6 @@
+[Unit]
+Description=Capture live config into chezmoi and push to the dotfiles repo
+
+[Service]
+Type=oneshot
+ExecStart=%h/.local/bin/chezmoi-autosync

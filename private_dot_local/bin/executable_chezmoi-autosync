@@ -1,0 +1,29 @@
+#!/bin/sh
+# chezmoi-autosync: capture live config into the chezmoi source and push it.
+# Driven hourly by chezmoi-autosync.timer (systemd --user).
+#
+# Secrets are excluded by the repo's .chezmoiignore (chezmoi never captures
+# them) and .gitignore (git never commits them), so this never pushes creds.
+set -eu
+
+# systemd user services have a minimal PATH; chezmoi/gh live in ~/.local/bin.
+export PATH="$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin"
+
+lock="${XDG_RUNTIME_DIR:-/tmp}/chezmoi-autosync.lock"
+exec 9>"$lock"
+flock -n 9 || exit 0          # another run is in progress; skip this tick
+
+# Pull live changes into the source tree (ignored paths are skipped).
+chezmoi re-add
+
+src="$(chezmoi source-path)"
+cd "$src"
+
+# Nothing changed -> no empty commit, no push.
+if git diff --quiet && git diff --cached --quiet && [ -z "$(git status --porcelain)" ]; then
+    exit 0
+fi
+
+git add -A
+git commit -q -m "chezmoi autosync: $(date '+%Y-%m-%d %H:%M:%S')"
+git push -q origin main
