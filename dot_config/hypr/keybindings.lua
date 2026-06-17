@@ -4,10 +4,13 @@
 mainMod = "SUPER" -- Sets "Windows" key as main modifier
 
 -- Example binds, see https://wiki.hypr.land/Configuring/Basics/Binds/ for more
-hl.bind("CTRL + RETURN", hl.dsp.exec_cmd(terminal))
+hl.bind("CTRL + RETURN", hl.dsp.exec_cmd("~/.config/hypr/scripts/term-split.sh"))
 closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- closeWindowBind:set_enabled(false)
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || hyprctl dispatch 'hl.dsp.exit()'"))
+-- Graceful logout: uwsm stop tears down the session's user units/app-scopes
+-- via systemd (SIGTERM + timeout) BEFORE killing the compositor, so apps like
+-- the browser get a clean quit instead of an abrupt Wayland disconnect.
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
@@ -15,11 +18,12 @@ hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + P", hl.dsp.window.pseudo())
 hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
--- Screenshots and region recording
-hl.bind("Print",                   hl.dsp.exec_cmd("linux-screenshot region"))
-hl.bind("SHIFT + Print",           hl.dsp.exec_cmd("linux-screenshot monitor"))
-hl.bind("CTRL + Print",            hl.dsp.exec_cmd("linux-screenshot full"))
-hl.bind(mainMod .. " + Print",     hl.dsp.exec_cmd("linux-screenshot annotate"))
+-- Screenshots — F10 is the "prt sc" key. Using Ctrl/Alt/Shift instead of Fn
+-- keeps the print-screen muscle memory without the cross-keyboard Fn+Print stretch.
+hl.bind("CTRL + F10",         hl.dsp.exec_cmd("linux-screenshot region"))
+hl.bind("ALT + F10",          hl.dsp.exec_cmd("linux-screenshot monitor"))
+hl.bind("CTRL + SHIFT + F10", hl.dsp.exec_cmd("linux-screenshot full"))
+hl.bind("ALT + SHIFT + F10",  hl.dsp.exec_cmd("linux-screenshot annotate"))
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("linux-screen-record desktop"))
 hl.bind(mainMod .. " + CTRL + R",  hl.dsp.exec_cmd("linux-screen-record mic"))
 

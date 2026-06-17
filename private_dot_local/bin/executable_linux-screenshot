@@ -20,18 +20,31 @@ cleanup() {
 }
 trap cleanup EXIT HUP INT TERM
 
+cursor_monitor_box() {
+    # Logical box "X,Y WxH" (slurp coords) of the monitor under the pointer.
+    set -- $(hyprctl cursorpos 2>/dev/null | tr -d ',')
+    hyprctl monitors -j 2>/dev/null | jq -r --argjson x "${1:-0}" --argjson y "${2:-0}" '
+        .[] | select(.x <= $x and $x < (.x + .width / .scale)
+                 and .y <= $y and $y < (.y + .height / .scale))
+        | "\(.x),\(.y) \((.width / .scale)|floor)x\((.height / .scale)|floor)"' | head -n1
+}
+
 select_geometry() {
     if [ -n "${SCREEN_CAPTURE_GEOMETRY:-}" ]; then
         printf '%s\n' "$SCREEN_CAPTURE_GEOMETRY"
         return
     fi
 
+    box=$(cursor_monitor_box)
     case $mode in
         region|annotate)
+            # Free click-drag selection. slurp's overlay spans all outputs;
+            # it cannot confine a drawn region to one monitor.
             slurp
             ;;
         monitor)
-            slurp -o
+            # Whole monitor under the pointer; no click needed.
+            printf '%s\n' "$box"
             ;;
         full)
             printf '%s\n' ""
