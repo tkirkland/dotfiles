@@ -1,4 +1,9 @@
 {
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  },
+  "includeCoAuthoredBy": false,
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": true,
     "mempalace@mempalace": true
