@@ -1,0 +1,14 @@
+# Targets chezmoi must never manage or capture (this repo is PUBLIC).
+# Keeps `chezmoi add`/`re-add` from ever pulling secrets into the source tree.
+.ssh/id_*
+.ssh/*.pem
+.ssh/*.key
+.config/gh/hosts.yml
+.gnupg
+.aws/credentials
+.config/**/credentials*
+.netrc
+.git-credentials
+*.age
+*.gpg
+key.txt

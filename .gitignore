@@ -1,0 +1,14 @@
+# PUBLIC repo — git must never commit secret material, even if it lands
+# in the source tree (belt-and-suspenders behind .chezmoiignore).
+*id_rsa*
+*id_ed25519*
+*id_ecdsa*
+*.pem
+*.key
+*.age
+*.gpg
+*hosts.yml
+*credentials*
+*.netrc
+.git-credentials
+key.txt
