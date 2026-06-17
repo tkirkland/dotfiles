@@ -9,6 +9,4 @@
 .config/**/credentials*
 .netrc
 .git-credentials
-*.age
-*.gpg
 key.txt

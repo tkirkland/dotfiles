@@ -5,8 +5,8 @@
 *id_ecdsa*
 *.pem
 *.key
-*.age
-*.gpg
+# NOTE: *.age / *.gpg are intentionally NOT ignored — encrypted blobs are meant
+# to live in the repo; that's how the age-encrypted token survives a reinstall.
 *hosts.yml
 *credentials*
 *.netrc
