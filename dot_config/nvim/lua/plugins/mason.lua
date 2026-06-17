@@ -44,6 +44,18 @@ return {
         "xmlformatter",
         "yaml-language-server",
       })
+      -- De-duplicate: our explicit list overlaps with tools LazyVim extras add,
+      -- and LazyVim's own auto-install loop calls install() once per entry, so a
+      -- duplicate makes it hit an already-installing package and log a harmless
+      -- but noisy "Package is already installing" error. Keep first occurrence.
+      local seen = {}
+      opts.ensure_installed = vim.tbl_filter(function(tool)
+        if seen[tool] then
+          return false
+        end
+        seen[tool] = true
+        return true
+      end, opts.ensure_installed)
     end,
   },
 }
