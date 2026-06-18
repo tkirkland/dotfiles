@@ -13,6 +13,40 @@ lock="${XDG_RUNTIME_DIR:-/tmp}/chezmoi-autosync.lock"
 exec 9>"$lock"
 flock -n 9 || exit 0          # another run is in progress; skip this tick
 
+# Auto-enroll NEW files in the directories we actively manage. `re-add` only
+# updates already-managed files, so a brand-new dotfile needs a one-time `add`.
+# chezmoi add honors .chezmoiignore (secrets/junk skipped); the allowlist keeps
+# this from sweeping in caches/state elsewhere in $HOME.
+# Config dirs only. NOT .local/bin — that holds installed binaries (uv,
+# chezmoi, ...), not just our scripts; auto-adding it once tried to commit a
+# 60MB binary. Our own scripts there are already managed; new ones get a
+# deliberate `chezmoi add`.
+auto_add_dirs="
+.config/hypr
+.config/kitty
+.config/waybar
+.config/swaync
+.config/hyprlock
+.config/hypridle
+.config/wofi
+.config/rofi
+.config/systemd/user
+.config/uwsm
+.config/xdg-desktop-portal
+"
+managed="$(chezmoi managed)"
+for d in $auto_add_dirs; do
+    [ -d "$HOME/$d" ] || continue
+    # Only small text files — never sweep in a binary or large blob even if one
+    # turns up in a watched dir (-size guard + text test).
+    find "$HOME/$d" -type f -size -256k 2>/dev/null | while IFS= read -r f; do
+        rel="${f#"$HOME"/}"
+        printf '%s\n' "$managed" | grep -qxF "$rel" && continue
+        grep -Iq . "$f" 2>/dev/null || continue
+        chezmoi add "$f" >/dev/null 2>&1 || true
+    done
+done
+
 # Pull live changes into the source tree (ignored paths are skipped).
 chezmoi re-add
 

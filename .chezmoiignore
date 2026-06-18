@@ -10,3 +10,8 @@
 .netrc
 .git-credentials
 key.txt
+# junk that should never be tracked even inside an allowlisted dir
+*.log
+*.tmp
+*.lock
+.config/hypr/.welcome-shown
