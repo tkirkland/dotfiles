@@ -26,4 +26,19 @@ fi
 
 git add -A
 git commit -q -m "chezmoi autosync: $(date '+%Y-%m-%d %H:%M:%S')"
-git push -q origin main
+
+# Push with the dedicated fine-grained PAT, decrypted at runtime from the age
+# blob (never written to disk). Falls back to git's configured auth if the
+# blob/key aren't present (e.g. a machine not yet bootstrapped).
+token_blob="$src/.dotfiles-token.age"
+key="$HOME/.config/chezmoi/key.txt"
+if [ -f "$token_blob" ] && [ -f "$key" ]; then
+    GH_TOKEN="$(/usr/bin/age -d -i "$key" "$token_blob")"
+    export GH_TOKEN
+    git -c credential.helper= \
+        -c credential.helper='!f() { test "$1" = get && printf "username=x\npassword=%s\n" "$GH_TOKEN"; }; f' \
+        push -q origin main
+    unset GH_TOKEN
+else
+    git push -q origin main
+fi
