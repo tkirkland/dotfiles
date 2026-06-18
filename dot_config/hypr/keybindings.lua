@@ -11,6 +11,8 @@ closeWindowBind = hl.bind(mainMod .. " + C", hl.dsp.window.close())
 -- via systemd (SIGTERM + timeout) BEFORE killing the compositor, so apps like
 -- the browser get a clean quit instead of an abrupt Wayland disconnect.
 hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("command -v hyprshutdown >/dev/null 2>&1 && hyprshutdown || uwsm stop"))
+-- Lock the session on demand (routes through hypridle's lock_cmd -> hyprlock).
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("loginctl lock-session"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + B", hl.dsp.exec_cmd(browser))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
