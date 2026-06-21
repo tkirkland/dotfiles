@@ -3,8 +3,8 @@
 
 hl.config({
     misc = {
-        force_default_wallpaper = -1,    -- Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo   = false, -- If true disables the random hyprland logo / anime girl background. :(
+        force_default_wallpaper = 0,    -- Disabled: swww manages the wallpaper (avoids mascot flash before swww-daemon restores it)
+        disable_hyprland_logo   = true, -- Disabled: swww draws the background instead
     },
 })
 

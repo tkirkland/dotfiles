@@ -17,6 +17,16 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("uwsm finalize")
 end)
 
+-- Wallpaper daemon (swww). Started from this hook because it needs the
+-- compositor's Wayland session as parent and ships neither a systemd user
+-- unit nor an XDG autostart .desktop -- exactly the reserved-hook case noted
+-- above. swww-daemon restores the last-set wallpaper from its cache on launch,
+-- so no `swww img` call is needed here once a wallpaper has been set once
+-- (`swww img <path>`).
+hl.on("hyprland.start", function()
+  hl.exec_cmd("swww-daemon")
+end)
+
 -- Autostart additional processes (like status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
