@@ -28,12 +28,12 @@
       }
     }
   },
+  "effortLevel": "medium",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "voiceEnabled": true,
-  "effortLevel": "xhigh"
+  "voiceEnabled": true
 }
