@@ -34,5 +34,6 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "theme": "dark",
-  "voiceEnabled": true
+  "voiceEnabled": true,
+  "effortLevel": "xhigh"
 }
