@@ -27,6 +27,16 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("swww-daemon")
 end)
 
+-- Recover external displays the greeter left HPD-dark. greeter-displays.sh
+-- runs `wlr-randr --output <conn> --off` to confine login to the laptop panel;
+-- on this NVIDIA box that disable drops the connector's hot-plug detect, so the
+-- kernel reports it `disconnected` and Hyprland skips it at start. Forcing a
+-- sysfs re-probe makes the kernel re-detect the sink and the running compositor
+-- applies monitors.lua live. Needs root (sysfs status write) -> NOPASSWD helper.
+hl.on("hyprland.start", function()
+  hl.exec_cmd("sudo /usr/local/bin/drm-reprobe")
+end)
+
 -- Autostart additional processes (like status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --
