@@ -1,0 +1,43 @@
+# hypridle — idle management (issue #72)
+# Chain (user-specified timings): dim 5m -> DPMS off 7m -> lock 10m -> suspend 30m.
+# DPMS-off intentionally precedes lock: waking the screen between 7-10min
+# returns to the unlocked desktop by design (single-user machine).
+
+general {
+    lock_cmd = pidof hyprlock || hyprlock       # never start a second hyprlock
+    before_sleep_cmd = loginctl lock-session     # lock before any suspend
+    # Give NVIDIA's resume service time to restore the display engine, then
+    # explicitly wake the outputs. Do not cycle DPMS off here: that races the
+    # compositor and can leave the displays permanently black after resume.
+    after_sleep_cmd = sleep 2 && hyprctl dispatch 'hl.dsp.dpms("on")'
+}
+
+# 5 min — dim the panel (saves+restores current brightness).
+listener {
+    timeout = 300
+    on-timeout = brightnessctl -s set 10%
+    on-resume = brightnessctl -r
+}
+
+# 7 min — power the screen off (DPMS). Before lock, on purpose.
+listener {
+    timeout = 420
+    on-timeout = hyprctl dispatch 'hl.dsp.dpms("off")'
+    on-resume = hyprctl dispatch 'hl.dsp.dpms("on")'
+}
+
+# 8 min — lock the session (routes through general.lock_cmd -> hyprlock).
+listener {
+    timeout = 480
+    # Lock, then power the screen back off: hyprlock wakes the display to draw
+    # its surface, so re-assert DPMS off (after it grabs) to stay dark + locked.
+    on-timeout = loginctl lock-session && sleep 1 && hyprctl dispatch 'hl.dsp.dpms("off")'
+}
+
+# 30 min — suspend to RAM. DISABLED: this machine only offers s2idle (no deep
+# S3), and a live test failed to resume (forced power-off). Re-enable only if
+# s2idle resume is made reliable. Until then the idle chain stops at lock+DPMS.
+# listener {
+#     timeout = 1800
+#     on-timeout = systemctl suspend
+# }
