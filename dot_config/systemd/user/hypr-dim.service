@@ -1,9 +1,8 @@
 [Unit]
 Description=hypr-dim — per-display gamma brightness daemon (external outputs)
-# Upstream: wl-gammarelay-rs (github.com/MaxVerevkin/wl-gammarelay-rs), installed
-# locally as `hypr-dim`. The D-Bus name is compiled in and stays rs.wl-gammarelay.
+# Locally-built daemon (binary hypr-dim, D-Bus dev.hyprdim). Source, upstream
+# provenance and rebuild script (build-install.sh) live in ~/src/gamma-fix.
 # Driven by the `brightness-sync` wrapper to dim external displays. Issue #66.
-Documentation=https://github.com/MaxVerevkin/wl-gammarelay-rs
 PartOf=graphical-session.target
 After=graphical-session.target
 ConditionEnvironment=WAYLAND_DISPLAY
