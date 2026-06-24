@@ -5,7 +5,8 @@
   },
   "includeCoAuthoredBy": false,
   "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
+    "superpowers@superpowers-marketplace": true,
+    "mempalace@mempalace": true
   },
   "extraKnownMarketplaces": {
     "superpowers-marketplace": {
@@ -18,6 +19,12 @@
       "source": {
         "source": "github",
         "repo": "SuperClaude-Org/SuperClaude_Plugin"
+      }
+    },
+    "mempalace": {
+      "source": {
+        "source": "directory",
+        "path": "/home/me/.claude/plugins/marketplaces/mempalace"
       }
     }
   },
