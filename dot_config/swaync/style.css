@@ -1,9 +1,7 @@
-/* swaync style — live variant (epic #67, item 2).
- * Matches THIS machine's window decoration: solid #4a6f9a active border
- * (rgba 4a6f9aee), border_size 1, rounding 6 -> card radius 7 (rounding + 1px
- * border). Dark card #1e1e2e / text #f5f5f5. swaync links libgtk-3.
- * The installer ships a gradient-border variant (matching its own accent);
- * this one is tuned to the customized live look-and-feel. */
+/* swaync style — installer baseline (epic #67, item 2).
+ * Solid #4a6f9a border (rgba 4a6f9aee), 1px, card radius 7 (window rounding 6 +
+ * 1px border); dark card #1e1e2e / text #f5f5f5. Kept identical to the live
+ * desktop's swaync config (chezmoi). swaync links libgtk-3. */
 
 @keyframes swaync-fadein {
   from { opacity: 0; }
