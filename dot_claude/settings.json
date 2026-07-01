@@ -79,6 +79,10 @@
       }
     ]
   },
+  "statusLine": {
+    "type": "command",
+    "command": "~/.claude/statusline-command.sh"
+  },
   "enabledPlugins": {
     "superpowers@superpowers-marketplace": true,
     "mempalace@mempalace": true
@@ -104,13 +108,15 @@
     }
   },
   "effortLevel": "medium",
+  "awaySummaryEnabled": false,
   "tui": "fullscreen",
   "voice": {
     "enabled": true,
     "mode": "hold"
   },
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "theme": "dark",
   "voiceEnabled": true,
-  "skipWorkflowUsageWarning": true
+  "remoteControlAtStartup": true
 }
