@@ -22,7 +22,8 @@ hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))    -- dwindle only
 
 -- Screenshots — F10 is the "prt sc" key. Using Ctrl/Alt/Shift instead of Fn
 -- keeps the print-screen muscle memory without the cross-keyboard Fn+Print stretch.
-hl.bind("CTRL + F10",         hl.dsp.exec_cmd("linux-screenshot region"))
+-- Region clip matches the Windows Snipping Tool chord.
+hl.bind(mainMod .. " + SHIFT + S",  hl.dsp.exec_cmd("linux-screenshot region"))
 hl.bind("ALT + F10",          hl.dsp.exec_cmd("linux-screenshot monitor"))
 hl.bind("CTRL + SHIFT + F10", hl.dsp.exec_cmd("linux-screenshot full"))
 hl.bind("ALT + SHIFT + F10",  hl.dsp.exec_cmd("linux-screenshot annotate"))
@@ -52,7 +53,8 @@ end
 
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S",         hl.dsp.workspace.toggle_special("magic"))
-hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+-- CTRL instead of SHIFT: SUPER+SHIFT+S is the region-screenshot chord.
+hl.bind(mainMod .. " + CTRL + S", hl.dsp.window.move({ workspace = "special:magic" }))
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
