@@ -4,6 +4,7 @@
     "pr": ""
   },
   "includeCoAuthoredBy": false,
+  "model": "claude-fable-5[1m]",
   "hooks": {
     "SessionStart": [
       {
@@ -117,7 +118,6 @@
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
-  "remoteControlAtStartup": true,
-  "voiceEnabled": true,
-  "model": "claude-fable-5[1m]"
+  "remoteControlAtStartup": false,
+  "voiceEnabled": true
 }
