@@ -117,6 +117,7 @@
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
   "theme": "dark",
+  "remoteControlAtStartup": true,
   "voiceEnabled": true,
-  "remoteControlAtStartup": true
+  "model": "claude-fable-5[1m]"
 }
