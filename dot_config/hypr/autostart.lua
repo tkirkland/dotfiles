@@ -37,6 +37,14 @@ hl.on("hyprland.start", function()
   hl.exec_cmd("sudo /usr/local/bin/drm-reprobe")
 end)
 
+-- Walker launcher backend (elephant) + walker in service mode for instant
+-- open on SUPER+R. Neither ships a systemd user unit or XDG autostart entry
+-- (prebuilt binaries in ~/.local/bin) -- the reserved-hook case.
+hl.on("hyprland.start", function()
+  hl.exec_cmd("sh -c 'pgrep -x elephant >/dev/null || ~/.local/bin/elephant'")
+  hl.exec_cmd("sh -c 'sleep 1; ~/.local/bin/walker --gapplication-service'")
+end)
+
 -- Autostart additional processes (like status bars, etc.)
 -- Or execute your favorite apps at launch like this:
 --

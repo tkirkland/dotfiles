@@ -5,7 +5,7 @@
 terminal    = "kitty"
 browser     = "brave-browser"
 fileManager = "dolphin"
-menu        = "hyprlauncher"
+menu        = "walker"
 
 
 -------------------
