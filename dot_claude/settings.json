@@ -5,6 +5,36 @@
   },
   "includeCoAuthoredBy": false,
   "model": "claude-fable-5[1m]",
+  "permissions": {
+    "allow": [
+      "Edit(/tmp/claude-1000/**)",
+      "Write(/tmp/claude-1000/**)"
+    ],
+    "ask": [
+      "Edit(/home/me/src/**)",
+      "Write(/home/me/src/**)",
+      "Edit(/home/me/.config/**)",
+      "Write(/home/me/.config/**)",
+      "Edit(/home/me/.local/share/chezmoi/**)",
+      "Write(/home/me/.local/share/chezmoi/**)",
+      "Edit(/home/me/.claude/**)",
+      "Write(/home/me/.claude/**)"
+    ],
+    "deny": [
+      "Bash(git push --force*)",
+      "Bash(git push -f*)",
+      "Bash(git filter-branch*)",
+      "Bash(git reset --hard*)",
+      "Bash(gh api -X PUT*)",
+      "Bash(gh api -X PATCH*)",
+      "Bash(gh api -X DELETE*)",
+      "Bash(gh api --method PUT*)",
+      "Bash(gh api --method PATCH*)",
+      "Bash(gh api --method DELETE*)",
+      "Bash(gh repo delete*)",
+      "Bash(gh pr merge*--admin*)"
+    ]
+  },
   "hooks": {
     "SessionStart": [
       {
