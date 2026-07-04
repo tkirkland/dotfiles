@@ -68,6 +68,17 @@
         ]
       }
     ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '{\"hookSpecificOutput\":{\"hookEventName\":\"UserPromptSubmit\",\"additionalContext\":\"REQUIRED FIRST STEP: Before any file reads or shell commands, search MemPalace (mempalace_search / mempalace_kg_query) for context on this topic. Only skip if the prompt is pure conversation with no task.\"}}'"
+          }
+        ]
+      }
+    ],
     "Stop": [
       {
         "matcher": "",
