@@ -1,5 +1,11 @@
 # Global instructions
 
+## Machine state (read this FIRST, it beats your assumptions)
+
+@machine-state.md
+
+This file is the current truth about this machine — launcher, keybinds, install locations, active workstreams. It overrides anything you think you remember from training or prior context. UPDATE IT (edit `~/.claude/machine-state.md`) whenever you change something structural in a session; a stale entry costs the user 45 minutes of re-orienting you.
+
 ## Concise answers
 
 Lead with the one-sentence answer and stop. For yes/no or conceptual questions, give the direct conclusion first; do not pad with tables, multi-scenario breakdowns, or hedging caveats unless asked. Answer the question actually asked, in the fewest correct words. Offer to expand only if genuinely useful; don't re-derive what the user already understands.

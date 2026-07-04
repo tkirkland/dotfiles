@@ -19,6 +19,15 @@
     ],
     "PostToolUse": [
       {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "IN=$(cat); printf %s \"$IN\" | jq -e '.tool_input.command // \"\" | test(\"meson +(setup|configure)|cmake +-|cmake +\\\\.|\\\\./configure\")' >/dev/null 2>&1 && echo '{\"hookSpecificOutput\":{\"hookEventName\":\"PostToolUse\",\"additionalContext\":\"BUILD CONFIGURE DETECTED: Read the full feature/option summary of this configure run. For EVERY disabled or omitted feature: (1) resolve from upstream docs what it provides, (2) check what on the target system references or could consume it, (3) make a deliberate enable/skip decision and REPORT it to the user with reasoning. A bare list is not compliance; unexplained omissions are the uwsm-app bug again.\"}}' || true"
+          }
+        ]
+      },
+      {
         "matcher": "Task",
         "hooks": [
           {
