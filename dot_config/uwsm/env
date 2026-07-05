@@ -3,3 +3,8 @@
 export LIBVA_DRIVER_NAME=nvidia
 export __GLX_VENDOR_LIBRARY_NAME=nvidia
 export GBM_BACKEND=nvidia-drm
+
+# Qt/GTK theming: Qt apps read the GTK settings (dark, icons); cursor theme
+# for X/xwayland clients. Paired with the gsettings dark defaults (issues #51/#76).
+export QT_QPA_PLATFORMTHEME=gtk3
+export XCURSOR_THEME=Adwaita
