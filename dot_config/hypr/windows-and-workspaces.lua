@@ -46,3 +46,14 @@ hl.window_rule({
     move  = "20 monitor_h-120",
     float = true,
 })
+
+
+-- Dolphin transparency: match kitty's background_opacity 0.7. Single string
+-- field per the wiki (active inactive, "override" = absolute not multiplied):
+-- https://wiki.hypr.land/Configuring/Basics/Window-Rules/
+hl.window_rule({
+    name  = "dolphin-opacity",
+    match = { class = "org.kde.dolphin" },
+
+    opacity = "0.7 override 0.7 override",
+})
