@@ -12,7 +12,11 @@ fi
 # Need git to fetch the bootstrap repo; install it if missing.
 if ! command -v git >/dev/null 2>&1; then
   echo "[neovim-bootstrap] installing git..."
-  sudo apt-get update -qq && sudo apt-get install -y git
+  if [ "$(id -u)" -eq 0 ]; then
+    apt-get update -qq && apt-get install -y git
+  else
+    sudo apt-get update -qq && sudo apt-get install -y git
+  fi
 fi
 
 repo="$HOME/src/neolazy"
